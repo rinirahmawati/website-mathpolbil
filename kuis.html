@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Pola Bilangan Kelas 8</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f4f4f9;
+            font-family: 'Arial', sans-serif;
+            color: black;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .quiz-question {
+            background-color: #e8f8e8;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+        }
+        .quiz-question h4 {
+            font-size: 18px;
+        }
+        .form-check-label {
+            color: black;
+        }
+        .navbar {
+            background-color: #56cc7a;
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: black;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #2b8e57;
+        }
+        button {
+            background-color: #1e90ff; /* light blue */
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #4682b4;
+        }
+        .question-navigation {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .question-navigation table {
+            width: 100%;
+            text-align: center;
+        }
+        .question-navigation td {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #f4f4f9;
+            border-radius: 50%;
+        }
+        .question-navigation td.active {
+            background-color: #56cc7a;
+            color: white;
+        }
+        .result {
+            display: none;
+            margin-top: 30px;
+            background-color: #f8f9f8;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .answer-list {
+            margin-top: 20px;
+        }
+        .correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        .kahoot-link {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="kls8.html">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="materi.html">Materi <i class="fas fa-book"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="lemker1.html">Lembar Kerja <i class="fas fa-pencil-alt"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="latihan1.html">Lembar Latihan <i class="fas fa-laptop-code"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://kahoot.it/challenge/066209?challenge-id=46327b82-c7e6-47b2-b79c-0078a1a1249e_1732697839778">Kuis <i class="fas fa-puzzle-piece"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About <i class="fas fa-info-circle"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Kuis Materi Pola Bilangan - Kelas 8</h1>
+        
+        <form id="quizForm">
+            <div id="questionContainer">
+                <!-- Soal-soal akan ditampilkan disini -->
+            </div>
+
+            <div class="question-navigation">
+                <table>
+                    <tr>
+                        <!-- Indeks soal -->
+                    </tr>
+                </table>
+            </div>
+
+            <div class="kahoot-link">
+                <p>Untuk kuis lebih lanjut, silakan klik link berikut: <a href="https://kahoot.it/challenge/066209?challenge-id=46327b82-c7e6-47b2-b79c-0078a1a1249e_1732697839778" target="_blank">Kuis Kahoot</a></p>
+            </div>
+
+            <button type="button" id="submitBtn" onclick="submitQuiz()">Submit Kuis</button>
+        </form>
+
+        <div id="result" class="result">
+            <h3>Hasil Kuis</h3>
+            <p id="score">Skor: 0</p>
+            <div id="answerList" class="answer-list"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { 
+                question: 'Pola bilangan berikut: 2, 4, 6, 8, 10, ... adalah contoh dari?', 
+                options: ['Deret bilangan ganjil', 'Deret bilangan genap', 'Deret bilangan prima', 'Deret bilangan Fibonacci'], 
+                correct: 'b' 
+            },
+            { 
+                question: 'Pola bilangan berikut: 1, 1, 2, 3, 5, 8, 13, ... adalah contoh dari?', 
+                options: ['Deret bilangan genap', 'Deret bilangan ganjil', 'Deret bilangan Fibonacci', 'Deret bilangan prima'], 
+                correct: 'c' 
+            },
+            { 
+                question: 'Pola bilangan berikut: 3, 6, 9, 12, 15, ... adalah contoh dari?', 
+                options: ['Deret bilangan kelipatan 3', 'Deret bilangan kelipatan 2', 'Deret bilangan Fibonacci', 'Deret bilangan ganjil'], 
+                correct: 'a' 
+            },
+            { 
+                question: 'Pola bilangan berikut: 5, 10, 15, 20, 25, ... adalah contoh dari?', 
+                options: ['Deret bilangan geometri', 'Deret bilangan aritmatika', 'Deret bilangan Fibonacci', 'Deret bilangan ganjil'], 
+                correct: 'b' 
+            },
+            { 
+                question: 'Pola bilangan berikut: 10, 20, 30, 40, 50, ... adalah contoh dari?', 
+                options: ['Deret bilangan kelipatan 10', 'Deret bilangan genap', 'Deret bilangan ganjil', 'Deret bilangan Fibonacci'], 
+                correct: 'a' 
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        // Function to display the current question
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            let questionHTML = `
+                <div class="quiz-question" id="question-${currentQuestionIndex + 1}">
+                    <h4>${currentQuestionIndex + 1}. ${question.question}</h4>
+                    ${question.options.map((option, index) => {
+                        return `
+                            <div class="form-check">
+                                <input type="radio" name="q${currentQuestionIndex + 1}" value="${String.fromCharCode(97 + index)}" class="form-check-input" id="q${currentQuestionIndex + 1}-option${index}">
+                                <label class="form-check-label" for="q${currentQuestionIndex + 1}-option${index}">
+                                    ${option}
+                                </label>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+
+            document.getElementById('questionContainer').innerHTML = questionHTML;
+            updateQuestionNavigation();
+        }
+
+        // Function to update the navigation
+        function updateQuestionNavigation() {
+            const navigationHTML = questions.map((_, index) => {
+                return `<td class="${index === currentQuestionIndex ? 'active' : ''}" onclick="goToQuestion(${index})">${index + 1}</td>`;
+            }).join('');
+            document.querySelector('.question-navigation table tr').innerHTML = navigationHTML;
+        }
+
+        // Function to navigate to a specific question
+        function goToQuestion(index) {
+            currentQuestionIndex = index;
+            displayQuestion();
+        }
+
+        // Function to submit the quiz
+        function submitQuiz() {
+            let score = 0;
+            const answers = [];
+
+            // Check answers
+            for (let i = 0; i < questions.length; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i + 1}"]:checked`);
+                const correctAnswer = questions[i].correct;
+
+                if (selectedAnswer) {
+                    const userAnswer = selectedAnswer.value;
+                    const isCorrect = userAnswer === correctAnswer;
+                    answers.push({ question: i + 1, userAnswer, correctAnswer, isCorrect });
+
+                    if (isCorrect) {
+                        score++;
+                    }
+                } else {
+                    answers.push({ question: i + 1, userAnswer: 'Tidak dijawab', correctAnswer, isCorrect: false });
+                }
+            }
+
+            // Display score and answers
+            document.getElementById('score').innerText = `Skor: ${score}`;
+            const answerList = document.getElementById('answerList');
+            answerList.innerHTML = '';
+
+            answers.forEach(answer => {
+                const answerDiv = document.createElement('div');
+                answerDiv.classList.add(answer.isCorrect ? 'correct' : 'incorrect');
+                answerDiv.textContent = `Pertanyaan ${answer.question}: Jawaban Anda ${answer.userAnswer} (Jawaban Benar: ${answer.correctAnswer})`;
+                answerList.appendChild(answerDiv);
+            });
+
+            document.getElementById('result').style.display = 'block';
+        }
+
+        // Display the first question
+        displayQuestion();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
